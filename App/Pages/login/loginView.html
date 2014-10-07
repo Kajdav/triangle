@@ -1,0 +1,18 @@
+<div class='container'>
+	<div class='createOrJoin'>
+		<button ng-click='toggleNewGame()'>Create New Game</button>{{test}}
+		<button ng-click='toggleJoinGame()'>Join Game</button>		
+	</div>
+	<form name='createGameForm' ng-show='showCreateGameForm'>
+		<h5>Create Game</h5>
+		<input class='text' name='gameName' ng-model='gameName' placeholder='Game Name' required></input>
+		<input class='password' name='gamePassword' ng-model='gamePassword' placeholder='Password (optional)' required> </input>
+		<button ng-click='newGame()'>Create Game</button>
+	</form>
+	<form name='joinGameForm' ng-show='showJoinGameForm'>
+		<h5>Join Game</h5>
+		<input class='text' name='gameName' ng-model='gameId' placeholder='Game ID' required></input>
+		<input class='password' name='gamePassword' ng-model='gamePassword' placeholder='Password (optional)' required> </input>
+		<button ng-click='joinGame()'>Join Game</button>
+	</form>
+</div>
