@@ -12,7 +12,15 @@ app.config(function($routeProvider){
 		})
 		.when('/game', {
 			templateUrl: 'App/Pages/game/gameView.html',
-			controller: 'gameControl'
+			controller: 'gameControl',
+			resolve: {
+				gameRef: function(dataService) {
+					return dataService.getGame();
+				},
+				itemRef: function(dataService) {
+					return dataService.getItems();
+				}
+			}
 		})
 		.otherwise({
 			redirectTo: '/login'
@@ -22,7 +30,14 @@ app.config(function($routeProvider){
 app.run(function($rootScope, $route, $location, $routeParams, environmentService){
 	$rootScope.$on('$routeChangeStart', function(event, next, current){
 		if(environmentService.getUserName()) {
-			$rootScope.username = environmentService.getUserName()
+			$rootScope.username = environmentService.getUserName();
+			if(environmentService.getGameId()) {
+				$rootScope.gameId = environmentService.getGameId();
+				console.log($rootScope.gameId);
+			}
+			else{
+				$location.path('/joinGame');
+			}
 		}
 		else {
 			$location.path('/login');

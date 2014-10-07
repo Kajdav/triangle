@@ -2,7 +2,10 @@
 	<div class='addItem'>
 		<form name='addItemForm'>
 			<input type='text' ng-name='addItemInput' ng-model='addItemInput' placeholder='Item' required></input>
-			<button ng-click='addItem()'>Add to Bucket</button>
+			<button ng-click='addItem(addItemInput)'>Add to Bucket</button>
 		</form>
+		<div ng-repeat='item in bucket'>
+		{{item.item}}
+		</div>
 	</div>
 </div>
