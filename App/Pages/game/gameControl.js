@@ -1,6 +1,7 @@
 var app = angular.module('triangleApp');
 
-app.controller('userControl', function($scope){
+app.controller('gameControl', function($scope){
+	$scope.bucket = 
 	$scope.addItem = function() {
 		dataService.addItem($scope.addItemInput);
 	}

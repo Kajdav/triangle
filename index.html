@@ -5,7 +5,9 @@
 </head>
 <body ng-controller='mainControl'>
 <a href='#/user'>User</a>
-<a href='#/'>Home</a>
+<a href='#/login'>Login</a>
+<a href='#/joinGame'>Join Game</a>
+<a href='#/game'>Current Game</a>
 <div ng-view></div>
 
 	<script src='App/Main/env.js'></script>
@@ -15,11 +17,14 @@
 	<script src="https://cdn.firebase.com/js/client/1.1.0/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
 
+
 	<script src='App/Main/app.js'></script>
 	<script src='App/Main/mainControl.js'></script>
 	<script src='App/Main/dataService.js'></script>
-	<script src='App/Pages/user/userControl.js'></script>
-	<script src='App/Pages/login/loginControl.js'></script>
 	<script src='App/Main/environmentService.js'></script>
+
+	<script src='App/Pages/game/gameControl.js'></script>
+	<script src='App/Pages/joinGame/joinGameControl.js'></script>
+	<script src='App/Pages/login/loginControl.js'></script>
 </body>
 </html>

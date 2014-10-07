@@ -1,12 +1,20 @@
 var app = angular.module('triangleApp');
 
 app.service('dataService', function($firebase, environmentService){
-	this.firebaseUrl = environmentService.getEnv().firebase;
-	this.newGame = function() {
-		var gameId = '???'
-		firebase.child('game').set(gameId)
+	var ref = '';
+	this.newGame = function(gameId) {
+		ref = environmentService.getEnv().firebase + '/' + gameId;
+		var firebase = new Firebase(ref);
+		console.log(ref)
+		console.log(firebase)
+		console.log($firebase(new Firebase(ref)));
+		$location.path('/game');
+		return $firebase(new Firebase(ref));
 	}
-	this.addItem = function(text) {
-
+	this.getPlayers = function() {
+		return $firebase(new Firebase(ref + '/players'))
+	}
+	this.getItems = function() {
+		return $firebase(new Firebase(ref + '/items'))
 	}
 })
