@@ -1,8 +1,17 @@
 <div class='container'>
-	<form name='loginForm'>
-		<h5>Log In</h5>
+	<button ng-click='toggleRegister()'>Register</button>
+	<button ng-click='toggleLogin()'>Login</button>
+	<form name='registerForm' ng-show='registerShow'>
+		<h5>Register View</h5>
 		<input class='text' name='userName' ng-model='userName' placeholder='User Name' required></input>
-		<input class='password' name='userPassword' ng-model='userPassword' placeholder='Password (optional)'> </input>
-		<button ng-click='login()'>Create Game</button>
+		<input class='text' name='userEmail' ng-model='userEmail' placeholder='Email' required></input>
+		<input class='password' name='userPassword' ng-model='userPassword' placeholder='Password' required> </input>
+		<button ng-click='register()'>Register</button>
+	</form>
+	<form name='loginForm' ng-show='loginShow'>
+		<h5>Login View</h5>
+		<input class='text' name='userEmail' ng-model='userEmail' placeholder='Email' required></input>
+		<input class='password' name='userPassword' ng-model='userPassword' placeholder='Password' required> </input>
+		<button ng-click='login()'>Log In</button>
 	</form>
 </div>

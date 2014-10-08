@@ -15,5 +15,5 @@ app.service('environmentService', function($window){
 	}
 	this.getGameId = function(){
 		return $window.localStorage.getItem('gameId');
-	}	
+	}
 });
