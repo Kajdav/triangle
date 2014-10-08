@@ -4,7 +4,6 @@ app.controller('loginControl', function($scope, environmentService, $location, a
 	$scope.registerShow = false;
 	$scope.loginShow = false;
 	$scope.login = function() {
-		debugger;
 		var userObj = {
 			email: $scope.userEmail,
 			password: $scope.userPassword
@@ -12,7 +11,7 @@ app.controller('loginControl', function($scope, environmentService, $location, a
 		console.log(userObj)
 		environmentService.saveUserName(userObj.name);
 		$location.path('/joinGame');
-		authService.register(userObj);
+		authService.login(userObj);
 	}
 	$scope.register = function() {
 		var userObj = {
@@ -23,7 +22,7 @@ app.controller('loginControl', function($scope, environmentService, $location, a
 		console.log(userObj)
 		environmentService.saveUserName(userObj.name);
 		$location.path('/joinGame');
-		authService.login(userObj);
+		authService.register(userObj);
 	}
 	$scope.toggleRegister = function(){
 		$scope.registerShow = true;

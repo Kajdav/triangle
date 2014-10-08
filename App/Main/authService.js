@@ -35,7 +35,7 @@ app.service('authService', function(environmentService){
 	this.login = function(user, cb) {
 		firebaseLogin.authWithPassword({
 			email : user.email,
-			passowrd: user.password
+			password: user.password
 		}, function(err, authData){
 			if (err) {
 				switch (err.code) {
