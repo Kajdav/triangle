@@ -3,6 +3,7 @@ var app = angular.module('triangleApp');
 app.controller('loginControl', function($scope, environmentService, $location, authService){
 	$scope.registerShow = false;
 	$scope.loginShow = false;
+	var authData;
 	$scope.login = function() {
 		var userObj = {
 			email: $scope.userEmail,
@@ -11,7 +12,9 @@ app.controller('loginControl', function($scope, environmentService, $location, a
 		console.log(userObj)
 		environmentService.saveUserName(userObj.name);
 		$location.path('/joinGame');
-		authService.login(userObj);
+		authService.login(userObj, function(data){
+			authData = data;
+		});
 	}
 	$scope.register = function() {
 		var userObj = {
@@ -22,7 +25,9 @@ app.controller('loginControl', function($scope, environmentService, $location, a
 		console.log(userObj)
 		environmentService.saveUserName(userObj.name);
 		$location.path('/joinGame');
-		authService.register(userObj);
+		authService.register(userObj, function(data){
+			console.log(data);
+		});
 	}
 	$scope.toggleRegister = function(){
 		$scope.registerShow = true;

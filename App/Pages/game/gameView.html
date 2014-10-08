@@ -1,11 +1,19 @@
 <div class='container'>
-	<div class='addItem'>
-		<form name='addItemForm'>
-			<input type='text' ng-name='addItemInput' ng-model='addItemInput' placeholder='Item' required></input>
-			<button ng-click='addItem(addItemInput)'>Add to Bucket</button>
+	<div class='addtoBucket' ng-show='addtoBucketShow'>
+		<form name='addItemForm' ng-show='addtoBucketInputShow'>
+			<input type='text' ng-name='addItemInput' ng-model='addItemInput' placeholder='Item'></input>
+			<button ng-click='addItem(addItemInput)' ng-disabled="!addItemInput">Add Item</button>
 		</form>
-		<div ng-repeat='item in bucket'>
+		<div class='addtoBucketConfirm' ng-show='addtoBucketConfirmShow'>
+			<button ng-click='dumpInBucket()'>Dump in Bucket</button>
+		</div>
+		<div ng-repeat='item in addtoBucket'>
 		{{item.item}}
 		</div>
+	</div>
+	<div class='gameplay' ng-show='gameplayShow'>
+		{{bucket.length - 1}} items left in the Bucket!
+		<button ng-click='startGame()'>Start Game!</button>
+		<button ng-click='repopulateBucket()'>Repopulate Bucket</button>
 	</div>
 </div>

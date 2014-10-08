@@ -28,11 +28,13 @@ app.config(function($routeProvider){
 });
 
 app.run(function($rootScope, $route, $location, $routeParams, environmentService){
-	$rootScope.$on('$routeChangeStart', function(event, next, current){
+	var check = function() {
 		if(environmentService.getUserName()) {
 			$rootScope.username = environmentService.getUserName();
+			$rootScope.$broadcast('run:userNameUpdate');
 			if(environmentService.getGameId()) {
 				$rootScope.gameId = environmentService.getGameId();
+				$rootScope.$broadcast('run:gameIdUpdate');
 				console.log($rootScope.gameId);
 			}
 			else{
@@ -42,5 +44,9 @@ app.run(function($rootScope, $route, $location, $routeParams, environmentService
 		else {
 			$location.path('/login');
 		}
+	}
+	check();
+	$rootScope.$on('$routeChangeStart', function(event, next, current){
+		check();
 	})
 })

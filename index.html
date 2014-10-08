@@ -8,6 +8,9 @@
 <a href='#/login'>Login</a>
 <a href='#/joinGame'>Join Game</a>
 <a href='#/game'>Current Game</a>
+<span>Logged in as {{currentUser}}</span>
+<br>
+<span>Current Game: {{gameId}}</span>
 <div ng-view></div>
 
 	<script src='App/Main/env.js'></script>
@@ -23,6 +26,7 @@
 	<script src='App/Main/dataService.js'></script>
 	<script src='App/Main/environmentService.js'></script>
 	<script src='App/Main/authService.js'></script>
+	<script src='App/Main/bucketService.js'></script>
 
 	<script src='App/Pages/game/gameControl.js'></script>
 	<script src='App/Pages/joinGame/joinGameControl.js'></script>

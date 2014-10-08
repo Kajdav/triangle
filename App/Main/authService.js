@@ -3,8 +3,6 @@ var app = angular.module('triangleApp');
 app.service('authService', function(environmentService){
 	var firebaseUrl = environmentService.getEnv().firebase;
 	var firebaseLogin = new Firebase(firebaseUrl);
-	console.log(firebaseUrl);
-	console.log(firebaseLogin);
 
 	this.register = function(user, cb){
 		firebaseLogin.createUser({
@@ -50,5 +48,12 @@ app.service('authService', function(environmentService){
 				cb(authData);
 			}
 		});
+	}
+
+	this.getAuthentication = function() {
+		return firebaseLogin.getAuth();
+	}
+	this.getUserId = function() {
+		return firebaseLogin.getAuth().auth.uid.replace('simplelogin:', '');
 	}
 });
