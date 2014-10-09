@@ -1,6 +1,6 @@
 var app = angular.module('triangleApp');
 
-app.controller('loginControl', function($scope, environmentService, $location, authService){
+app.controller('loginControl', function($scope, environmentService, $location, authService, dataService){
 	$scope.registerShow = false;
 	$scope.loginShow = false;
 	var authData;

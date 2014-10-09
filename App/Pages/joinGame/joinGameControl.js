@@ -18,6 +18,8 @@ app.controller('joinGameControl', function($scope, dataService){
 	}
 	$scope.newGame = function(){
 		$scope.game = dataService.newGame($scope.gameName);
-		console.log($scope.game.$asArray());
+	}
+	$scope.joinGame = function(){
+		$scope.game = dataService.joinGame($scope.gameName);
 	}
 })
