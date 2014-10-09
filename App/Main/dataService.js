@@ -1,8 +1,7 @@
 var app = angular.module('triangleApp');
 
 app.service('dataService', function($firebase, environmentService, $location, $rootScope, authService){
-	var ref = environmentService.getEnv().firebase + '/' + $rootScope.gameId;
-	console.log($rootScope.gameId);
+	var ref = environmentService.getEnv().firebase + '/games/' + $rootScope.gameId;
 
 
 	this.getGame = function() {
@@ -24,40 +23,38 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 	}
 	this.getUserGame = function() {
 		var userRef = environmentService.getEnv().firebase + '/users/' + authService.getUserId() + '/inGame';
-		var firebaseUsers = $firebase(new Firebase(userRef));
-		return firebaseUsers.$asObject();
+		return $firebase(new Firebase(userRef));
 	}
 
 
 	this.newGame = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/' + gameId;
+		ref = environmentService.getEnv().firebase + '/games/' + gameId;
 		environmentService.saveGameId(gameId);
 		this.updateUserGame(gameId);
 		var playerId = authService.getUserId();
-		var playerObj = {id: playerId, status: 'player', host: true};
 		var players = $firebase(new Firebase(this.getPlayersRef() + playerId));
-		var playersObj = players.$asArray();
-		playersObj.$add(playerObj);
-		$location.path('/game');
+		players.$set({
+			id: playerId, status: 'player', host: true
+		});
+		$location.path('/preGame');
 		return $firebase(new Firebase(ref));
 	}
 	this.joinGame = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/' + gameId;
+		ref = environmentService.getEnv().firebase + '/games/' + gameId;
 		environmentService.saveGameId(gameId);
 		this.updateUserGame(gameId);
 		var playerId = authService.getUserId();
-		var playerObj = {id: playerId, status: 'player', host: false};
-		var players = this.getPlayers().$asArray();
-		players.$add(playerObj);
-		$location.path('/game');
+		var players = $firebase(new Firebase(this.getPlayersRef() + playerId));
+		players.$set({
+			id: playerId, status: 'player', host: false
+		});
+		$location.path('/preGame');
 		return $firebase(new Firebase(ref));
 	}
 	this.updateUserGame = function(newGame) {
 			var userObj = this.getUserGame();
-			console.log(userObj);
-			userObj.inGame = newGame;
-			userObj.$save();
-			console.log(userObj);
+			userObj.$set(newGame);
+			// userObj.$save();
 	}
 	this.addItems = function(array) {
 		var arr = this.getItems().$asArray();

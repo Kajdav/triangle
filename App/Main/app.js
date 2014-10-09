@@ -10,8 +10,8 @@ app.config(function($routeProvider){
 			templateUrl: 'App/Pages/joinGame/joinGame.html',
 			controller: 'joinGameControl'
 		})
-		.when('/game', {
-			templateUrl: 'App/Pages/game/gameView.html',
+		.when('/preGame', {
+			templateUrl: 'App/Pages/preGame/preGameView.html',
 			controller: 'gameControl',
 			resolve: {
 				gameRef: function(dataService) {
@@ -29,21 +29,20 @@ app.config(function($routeProvider){
 
 app.run(function($rootScope, $route, $location, $routeParams, environmentService){
 	var check = function() {
-		if(environmentService.getUserName()) {
-			$rootScope.username = environmentService.getUserName();
-			$rootScope.$broadcast('run:userNameUpdate');
+		// if(environmentService.getUserName()) {
+			// $rootScope.username = environmentService.getUserName();
+			// $rootScope.$broadcast('run:userNameUpdate');
 			if(environmentService.getGameId()) {
 				$rootScope.gameId = environmentService.getGameId();
-				$rootScope.$broadcast('run:gameIdUpdate');
-				console.log($rootScope.gameId);
+				// $rootScope.$broadcast('run:gameIdUpdate');
 			}
 			else{
 				$location.path('/joinGame');
 			}
-		}
-		else {
-			$location.path('/login');
-		}
+		// }
+		// else {
+		// 	$location.path('/login');
+		// }
 	}
 	check();
 	$rootScope.$on('$routeChangeStart', function(event, next, current){

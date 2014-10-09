@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html ng-app='triangleApp'>
 <head>
-	<link rel='stylesheet' ref='Style/style.css'>
+	<link rel='stylesheet' href='Style/style.css'>
+	<link rel='stylesheet' href='Style/normalize.css'>
 </head>
 <body ng-controller='mainControl'>
-<a href='#/user'>User</a>
-<a href='#/login'>Login</a>
-<a href='#/joinGame'>Join Game</a>
-<a href='#/game'>Current Game</a>
-<span>Logged in as {{currentUser}}</span>
-<br>
-<span>Current Game: {{gameId}}</span>
-<div ng-view></div>
+<header class='top-bar'>
+	<div class='nav' ng-show='headerShow'>
+		<a href='#/login'>Login</a>
+		<a href='#/joinGame'>Join Game</a>
+		<a href='' ng-click='leaveGame()' ng-show='leaveGameShow'>Leave Game</a>
+		<a href='#/preGame' ng-show='leaveGameShow'>Current Game</a>
+	</div>
+	<div class='creds' ng-show='headerShow'>
+		<span>{{user.name}}</span>
+		<span>Current Game: {{user.inGame}}</span>
+	</div>
+</header>
+<div ng-view class='view'></div>
 
 	<script src='App/Main/env.js'></script>
 
@@ -28,7 +34,7 @@
 	<script src='App/Main/authService.js'></script>
 	<script src='App/Main/bucketService.js'></script>
 
-	<script src='App/Pages/game/gameControl.js'></script>
+	<script src='App/Pages/preGame/preGameControl.js'></script>
 	<script src='App/Pages/joinGame/joinGameControl.js'></script>
 	<script src='App/Pages/login/loginControl.js'></script>
 </body>

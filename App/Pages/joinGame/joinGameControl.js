@@ -1,6 +1,6 @@
 var app = angular.module('triangleApp');
 
-app.controller('joinGameControl', function($scope, dataService){
+app.controller('joinGameControl', function($scope, $rootScope, dataService){
 	var firebaseUrl = dataService.firebaseUrl;
 	$scope.showCreateGameForm = false;
 	$scope.showJoinGameForm = false;
@@ -18,8 +18,10 @@ app.controller('joinGameControl', function($scope, dataService){
 	}
 	$scope.newGame = function(){
 		$scope.game = dataService.newGame($scope.gameName);
+		$rootScope.$broadcast('credsChanged');
 	}
 	$scope.joinGame = function(){
 		$scope.game = dataService.joinGame($scope.gameName);
+		$rootScope.$broadcast('credsChanged');
 	}
 })
