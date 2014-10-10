@@ -1,0 +1,13 @@
+<div class='container'>
+	<h1>{{game.$id}}</h1>
+	<h3>Round: </h3>
+	<span>Items left in bucket: {{bucket.length - 1}}</span>
+	<br>
+	<span>Team 1:</span>
+	<br>
+	<span>Team 2:</span>
+	<div class='itView'>
+		<span ng-show='!startShow'>Time left: {{counter}}</span>
+		<button ng-click='startTimer()' ng-show='startShow'>Start!</button>
+	</div>
+</div>

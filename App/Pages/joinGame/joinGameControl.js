@@ -18,10 +18,8 @@ app.controller('joinGameControl', function($scope, $rootScope, dataService){
 	}
 	$scope.newGame = function(){
 		$scope.game = dataService.newGame($scope.gameName);
-		$rootScope.$broadcast('credsChanged');
 	}
 	$scope.joinGame = function(){
 		$scope.game = dataService.joinGame($scope.gameName);
-		$rootScope.$broadcast('credsChanged');
 	}
 })

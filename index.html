@@ -6,15 +6,16 @@
 </head>
 <body ng-controller='mainControl'>
 <header class='top-bar'>
-	<div class='nav' ng-show='headerShow'>
+	<div class='nav'>
+		<a href='#/game'>TEMP FOR GAME</a>
 		<a href='#/login'>Login</a>
-		<a href='#/joinGame'>Join Game</a>
-		<a href='' ng-click='leaveGame()' ng-show='leaveGameShow'>Leave Game</a>
-		<a href='#/preGame' ng-show='leaveGameShow'>Current Game</a>
+		<a href='#/joinGame' ng-show='!user.inGame'>Join Game</a>
+		<a href='' ng-click='leaveGame()' ng-show='user.inGame'>Leave Game</a>
+		<a href='#/preGame' ng-show='user.inGame'>Current Game</a>
 	</div>
-	<div class='creds' ng-show='headerShow'>
+	<div class='creds'>
 		<span>{{user.name}}</span>
-		<span>Current Game: {{user.inGame}}</span>
+		<span ng-show='user.inGame'>Current Game: {{user.inGame}}</span>
 	</div>
 </header>
 <div ng-view class='view'></div>
@@ -37,5 +38,6 @@
 	<script src='App/Pages/preGame/preGameControl.js'></script>
 	<script src='App/Pages/joinGame/joinGameControl.js'></script>
 	<script src='App/Pages/login/loginControl.js'></script>
+	<script src='App/Pages/game/gameControl.js'></script>
 </body>
 </html>

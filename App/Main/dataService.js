@@ -36,7 +36,9 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 		players.$set({
 			id: playerId, status: 'player', host: true
 		});
+		this.getGame().$set('status', false)
 		$location.path('/preGame');
+		$rootScope.$broadcast('credsChanged');
 		return $firebase(new Firebase(ref));
 	}
 	this.joinGame = function(gameId) {
@@ -49,7 +51,18 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 			id: playerId, status: 'player', host: false
 		});
 		$location.path('/preGame');
+		$rootScope.$broadcast('credsChanged');
 		return $firebase(new Firebase(ref));
+	}
+	this.leaveGame = function(gameId){
+		var playerId = authService.getUserId();
+		var players = $firebase(new Firebase(this.getPlayersRef()));
+		players.$remove(playerId)
+			.then(console.log('user removed from game'));
+		$location.path('/joinGame');
+		// ref = environmentService.getEnv().firebase + '/games/' + gameId;
+		environmentService.saveGameId(false);
+		this.updateUserGame(false);
 	}
 	this.updateUserGame = function(newGame) {
 			var userObj = this.getUserGame();

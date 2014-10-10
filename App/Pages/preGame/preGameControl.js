@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('triangleApp');
-app.controller('gameControl', function($rootScope, $scope, dataService, itemRef, $firebase, bucketService){
+app.controller('preGameControl', function($rootScope, $scope, dataService, itemRef, $firebase, bucketService){
 	$scope.addtoBucketShow = true;
 	$scope.addtoBucketInputShow = true;
 	$scope.addtoBucketConfirmShow = false;
@@ -26,6 +26,7 @@ app.controller('gameControl', function($rootScope, $scope, dataService, itemRef,
 	}
 	$scope.startGame = function() {
 		bucketService.createMain($scope.bucket);
+		dataService.getGame().$set('status', true);
 	}
 	$scope.repopulateBucket = function() {
 		bucketService.repopulateBucket();

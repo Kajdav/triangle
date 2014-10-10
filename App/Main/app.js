@@ -7,12 +7,12 @@ app.config(function($routeProvider){
 			controller: 'loginControl'
 		})
 		.when('/joinGame', {
-			templateUrl: 'App/Pages/joinGame/joinGame.html',
+			templateUrl: 'App/Pages/joinGame/joinGameView.html',
 			controller: 'joinGameControl'
 		})
 		.when('/preGame', {
 			templateUrl: 'App/Pages/preGame/preGameView.html',
-			controller: 'gameControl',
+			controller: 'preGameControl',
 			resolve: {
 				gameRef: function(dataService) {
 					return dataService.getGame();
@@ -21,6 +21,10 @@ app.config(function($routeProvider){
 					return dataService.getItems();
 				}
 			}
+		})
+		.when('/game', {
+			templateUrl: 'App/Pages/game/gameView.html',
+			controller: 'gameControl'
 		})
 		.otherwise({
 			redirectTo: '/login'
