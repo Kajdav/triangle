@@ -1,11 +1,19 @@
 var app = angular.module('triangleApp');
 
-app.service('rootService', function($rootScope, dataService){
+app.service('rootService', function($rootScope, dataService, authService){
 	this.bindUser = function(){
-		var user = dataService.getUser();
-		user.$bindTo($rootScope, 'user').then(function(unbind){
-			$rootScope.unbindUser = unbind;
-		})
+		if(authService.getAuthentication()){
+			var user = dataService.getUser();
+			user.$bindTo($rootScope, 'user').then(function(unbind){
+				$rootScope.unbindUser = unbind;
+				$rootScope.$broadcast('userLoaded');
+			})
+		} else if($rootScope.unbindUser) {
+			$rootScope.unbindUser();
+			$rootScope.user = false;
+		} else {
+			$rootScope.user = false;
+		}
 	}
 	this.bindGame = function(){
 		if ($rootScope.user){
@@ -17,4 +25,5 @@ app.service('rootService', function($rootScope, dataService){
 			}
 		})
 	}
+
 })

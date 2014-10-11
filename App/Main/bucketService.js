@@ -1,13 +1,19 @@
 var app = angular.module('triangleApp');
 
-app.service('bucketService', function(dataService){
-	var mainSync = dataService.getMainItems();
-	var mainArr = mainSync.$asArray();
-	var bucketSync = dataService.getItems();
-	var bucketArr = bucketSync.$asArray();
-	this.createMain = function(array) {
+app.service('bucketService', function($rootScope, dataService){
+	var mainSync;
+	var mainArr;
+	var tempSync;
+	var tempArr;
+	$rootScope.$on('userLoaded', function(){
+		mainSync = dataService.getMainItems();
+		mainArr = mainSync.$asArray();
+		tempSync = dataService.getItems();
+		tempArr = tempSync.$asArray();
+	});
+	this.createTemp = function(array){
 		for (var i = 0; i < array.length; i++) {
-			mainArr.$add(array[i]);
+			tempArr.$add(array[i]);
 		}
 	}
 	this.repopulateBucket = function(){
@@ -19,4 +25,10 @@ app.service('bucketService', function(dataService){
 			alert('Round not over!');
 		}
 	}
-})
+	this.addItems = function(array) {
+		var arr = dataService.getMainItems().$asArray();
+		for (var i = 0; i < array.length; i++) {
+			arr.$add(array[i]);
+		}
+	}
+});

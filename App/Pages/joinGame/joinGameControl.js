@@ -19,6 +19,6 @@ app.controller('joinGameControl', function($scope, $rootScope, dataService, game
 		$scope.game = gameService.newGame($scope.gameName);
 	}
 	$scope.joinGame = function(){
-		$scope.game = gameService.joinGame($scope.gameName);
+		$scope.game = gameService.joinGame($scope.gameId);
 	}
 })

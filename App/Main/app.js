@@ -13,14 +13,14 @@ app.config(function($routeProvider){
 		.when('/preGame', {
 			templateUrl: 'App/Pages/preGame/preGameView.html',
 			controller: 'preGameControl',
-			resolve: {
-				gameRef: function(dataService) {
-					return dataService.getGame();
-				},
-				itemRef: function(dataService) {
-					return dataService.getItems();
-				}
-			}
+			// resolve: {
+			// 	gameRef: function(dataService) {
+			// 		return dataService.getGame();
+			// 	},
+			// 	itemRef: function(dataService) {
+			// 		return dataService.getItems();
+			// 	}
+			// }
 		})
 		.when('/game', {
 			templateUrl: 'App/Pages/game/gameView.html',
@@ -40,6 +40,12 @@ app.run(function($rootScope, $route, $location, $routeParams, environmentService
 	check();
 	$rootScope.$on('$routeChangeStart', function(event, next, current){
 		check();
+	})
+
+	
+	$rootScope.$on('credsChanged', function(){
+		rootService.bindUser();
+		rootService.bindGame();
 	})
 	rootService.bindUser();
 	rootService.bindGame();

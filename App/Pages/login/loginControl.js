@@ -24,8 +24,8 @@ app.controller('loginControl', function($scope, $rootScope, environmentService, 
 		}
 		authService.register(userObj, function(data){
 			$rootScope.$broadcast('credsChanged');
+			$location.path('/joinGame');
 		});
-		$location.path('/joinGame');
 	}
 	$scope.toggleRegister = function(){
 		$scope.registerShow = true;

@@ -1,28 +1,26 @@
 var app = angular.module('triangleApp');
 
 app.service('dataService', function($firebase, environmentService, $location, $rootScope, authService){
-	var ref = environmentService.getEnv().firebase + '/games/' + $rootScope.gameId;
-	this.setRef = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/games/' + gameId;
-	}
-
+	// this.setRef = function() {
+	// 	ref = environmentService.getEnv().firebase + '/games/' + $rootScope.user.inGame;
+	// }
 	this.getUrl = function(){
-		return ref;
+		return (environmentService.getEnv().firebase + '/games/' + $rootScope.user.inGame);
 	}
 	this.getGame = function() {
-		return $firebase(new Firebase(ref));
+		return $firebase(new Firebase(this.getUrl()));
 	}
 	this.getBasicRef = function(){
 		return new Firebase(environmentService.getEnv().firebase);
 	}
 	this.getPlayersRef = function() {
-		return (ref + '/players/');
+		return (this.getUrl() + '/players/');
 	}
 	this.getItems = function() {
-		return $firebase(new Firebase(ref + '/items'));
+		return $firebase(new Firebase(this.getUrl() + '/items/temp'));
 	}
 	this.getMainItems = function() {
-		return $firebase(new Firebase(ref + '/items/main'))
+		return $firebase(new Firebase(this.getUrl() + '/items'))
 	}
 	this.getUserRef = function() {
 		return environmentService.getEnv().firebase + '/users/' + authService.getUserId();

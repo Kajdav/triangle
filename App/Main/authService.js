@@ -19,6 +19,7 @@ app.service('authService', function(environmentService){
 						authData.name = user.name;
 						authData.timestamp = new Date().toISOString();
 						authData.inGame = false;
+						authData.host = false;
 						firebaseLogin.child('users').child(authData.uid.replace('simplelogin:', '')).set(authData);
 						cb(authData);
 					} else{
