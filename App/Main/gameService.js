@@ -2,7 +2,10 @@ var app = angular.module('triangleApp');
 
 app.service('gameService', function(dataService, $firebase, environmentService, $location, $rootScope, authService){
 	this.newGame = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/games/' + gameId;
+		$rootScope.gameId = gameId;
+		// ref = environmentService.getEnv().firebase + '/games/' + gameId;
+		dataService.setRef(gameId);
+		// console.log(ref);
 		this.updateUserGame(gameId);
 		var playerId = authService.getUserId();
 		var players = $firebase(new Firebase(dataService.getPlayersRef() + playerId));
@@ -12,7 +15,7 @@ app.service('gameService', function(dataService, $firebase, environmentService, 
 		dataService.getGame().$set('status', false)
 		$location.path('/preGame');
 		$rootScope.$broadcast('credsChanged');
-		return $firebase(new Firebase(ref));
+		return $firebase(new Firebase(dataService.getRef()));
 	}
 	this.joinGame = function(gameId) {
 		ref = environmentService.getEnv().firebase + '/games/' + gameId;
@@ -33,13 +36,13 @@ app.service('gameService', function(dataService, $firebase, environmentService, 
 		players.$remove(playerId)
 			.then(console.log('user removed from game'));
 		$location.path('/joinGame');
-		environmentService.saveGameId(false);
 		this.updateUserGame(false);
 	}
 	this.updateUserGame = function(newGame) {
-			var userObj = dataService.getUserGame();
-			userObj.$set(newGame);
-			$rootScope.gameId = newGame;
+		var userObj = dataService.getUserGame();
+		userObj.$set(newGame);
+		$rootScope.gameId = newGame;
+		$rootScope.$broadcast('gameChanged');
 	}
 	this.addItems = function(array) {
 		var arr = dataService.getItems().$asArray();

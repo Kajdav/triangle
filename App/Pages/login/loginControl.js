@@ -10,12 +10,11 @@ app.controller('loginControl', function($scope, $rootScope, environmentService, 
 			password: $scope.userPassword
 		}
 		console.log(userObj)
-		environmentService.saveUserName(userObj.name);
 		$location.path('/joinGame');
 		authService.login(userObj, function(data){
 			authData = data;
+			$rootScope.$broadcast('credsChanged');
 		});
-		$rootScope.$broadcast('credsChanged');
 	}
 	$scope.register = function() {
 		var userObj = {
@@ -23,10 +22,7 @@ app.controller('loginControl', function($scope, $rootScope, environmentService, 
 			password: $scope.userPassword,
 			name: $scope.userName
 		}
-		console.log(userObj)
-		// environmentService.saveUserName(userObj.name);
 		authService.register(userObj, function(data){
-			console.log(data);
 			$rootScope.$broadcast('credsChanged');
 		});
 		$location.path('/joinGame');

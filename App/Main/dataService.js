@@ -2,7 +2,9 @@ var app = angular.module('triangleApp');
 
 app.service('dataService', function($firebase, environmentService, $location, $rootScope, authService){
 	var ref = environmentService.getEnv().firebase + '/games/' + $rootScope.gameId;
-
+	this.setRef = function(gameId) {
+		ref = environmentService.getEnv().firebase + '/games/' + gameId;
+	}
 
 	this.getUrl = function(){
 		return ref;

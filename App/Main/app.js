@@ -31,9 +31,9 @@ app.config(function($routeProvider){
 		})
 });
 
-app.run(function($rootScope, $route, $location, $routeParams, environmentService){
+app.run(function($rootScope, $route, $location, $routeParams, environmentService, authService, dataService, rootService){
 	var check = function() {
-		if(!authService.getAuthentication) {
+		if(!authService.getAuthentication()) {
 			$location.path('/login');
 		}
 	}
@@ -41,4 +41,6 @@ app.run(function($rootScope, $route, $location, $routeParams, environmentService
 	$rootScope.$on('$routeChangeStart', function(event, next, current){
 		check();
 	})
+	rootService.bindUser();
+	rootService.bindGame();
 })

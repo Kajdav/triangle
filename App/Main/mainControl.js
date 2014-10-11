@@ -4,13 +4,28 @@ app.controller('mainControl', ['$timeout', '$scope', '$rootScope', '$firebase', 
 	function($timeout, $scope, $rootScope, $firebase, dataService, authService, $location, gameService){
 	var updateUser = function(){
 		if(authService.getAuthentication()){
+			console.log('authenticated')
 			var userObj = dataService.getUser();
 			userObj.$bindTo($scope, 'user').then(function(unbind){
 				$scope.unbindUser = unbind;
-				$scope.joinGameShow = joinGameShowTest();
+				joinGameShowTest();
 			});
+		} else if ( $scope.unbindUser ) {
+			$scope.unbindUser();
+			$scope.user = false;
+			joinGameShowTest();
+			console.log('else if');
 		} else {
 			$scope.user = false;
+			joinGameShowTest();
+			console.log('else');
+		}
+	}
+	function joinGameShowTest() {
+		if ($scope.user && $scope.user.inGame === false) {
+			$scope.joinGameShow = true;
+		} else {
+			$scope.joinGameShow = false;
 		}
 	}
 	$scope.leaveGame = function(){
@@ -18,23 +33,20 @@ app.controller('mainControl', ['$timeout', '$scope', '$rootScope', '$firebase', 
 	}
 	$scope.logout = function() {
 		dataService.getBasicRef().unauth();
-		$scope.unbindUser();
-		$scope.user = false;
+		updateUser();
 		$location.path('/login');
-		debugger;
 	}
 	$rootScope.$on('credsChanged', function(){
 		if ($scope.user){$scope.unbindUser();}
 		updateUser();
-		console.log('credsChanged');
 	});
-	updateUser();
-	var joinGameShowTest = function() {
-		if ($scope.user.inGame === false && $scope.user) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	$scope.joinGameShow = false;
+	$scope.$watch('user', function(){
+		joinGameShowTest();
+	})
+	// updateUser();
+	$scope.user = $rootScope.user;
+	$timeout(function(){
+		console.log($rootScope.user);
+		console.log($scope.user);
+	}, 2000)
 }])
