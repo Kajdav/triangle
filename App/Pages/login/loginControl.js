@@ -1,6 +1,6 @@
 var app = angular.module('triangleApp');
 
-app.controller('loginControl', function($scope, $rootScope, environmentService, $location, authService, dataService){
+app.controller('loginControl', function($scope, $rootScope, environmentService, $location, authService){
 	$scope.registerShow = false;
 	$scope.loginShow = false;
 	var authData;
@@ -25,11 +25,11 @@ app.controller('loginControl', function($scope, $rootScope, environmentService, 
 		}
 		console.log(userObj)
 		// environmentService.saveUserName(userObj.name);
-		$location.path('/joinGame');
 		authService.register(userObj, function(data){
 			console.log(data);
 			$rootScope.$broadcast('credsChanged');
 		});
+		$location.path('/joinGame');
 	}
 	$scope.toggleRegister = function(){
 		$scope.registerShow = true;

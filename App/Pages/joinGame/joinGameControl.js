@@ -1,7 +1,6 @@
 var app = angular.module('triangleApp');
 
-app.controller('joinGameControl', function($scope, $rootScope, dataService){
-	var firebaseUrl = dataService.firebaseUrl;
+app.controller('joinGameControl', function($scope, $rootScope, dataService, gameService){
 	$scope.showCreateGameForm = false;
 	$scope.showJoinGameForm = false;
 	$scope.toggleNewGame = function(){
@@ -17,9 +16,9 @@ app.controller('joinGameControl', function($scope, $rootScope, dataService){
 		$scope.gamePassword = '';
 	}
 	$scope.newGame = function(){
-		$scope.game = dataService.newGame($scope.gameName);
+		$scope.game = gameService.newGame($scope.gameName);
 	}
 	$scope.joinGame = function(){
-		$scope.game = dataService.joinGame($scope.gameName);
+		$scope.game = gameService.joinGame($scope.gameName);
 	}
 })

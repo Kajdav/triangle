@@ -4,8 +4,14 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 	var ref = environmentService.getEnv().firebase + '/games/' + $rootScope.gameId;
 
 
+	this.getUrl = function(){
+		return ref;
+	}
 	this.getGame = function() {
 		return $firebase(new Firebase(ref));
+	}
+	this.getBasicRef = function(){
+		return new Firebase(environmentService.getEnv().firebase);
 	}
 	this.getPlayersRef = function() {
 		return (ref + '/players/');
@@ -16,6 +22,9 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 	this.getMainItems = function() {
 		return $firebase(new Firebase(ref + '/items/main'))
 	}
+	this.getUserRef = function() {
+		return environmentService.getEnv().firebase + '/users/' + authService.getUserId();
+	}
 	this.getUser = function(){
 		var userRef = environmentService.getEnv().firebase + '/users/' + authService.getUserId();
 		var firebaseUsers = $firebase(new Firebase(userRef));
@@ -25,57 +34,6 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 		var userRef = environmentService.getEnv().firebase + '/users/' + authService.getUserId() + '/inGame';
 		return $firebase(new Firebase(userRef));
 	}
-
-
-	this.newGame = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/games/' + gameId;
-		environmentService.saveGameId(gameId);
-		this.updateUserGame(gameId);
-		var playerId = authService.getUserId();
-		var players = $firebase(new Firebase(this.getPlayersRef() + playerId));
-		players.$set({
-			id: playerId, status: 'player', host: true
-		});
-		this.getGame().$set('status', false)
-		$location.path('/preGame');
-		$rootScope.$broadcast('credsChanged');
-		return $firebase(new Firebase(ref));
-	}
-	this.joinGame = function(gameId) {
-		ref = environmentService.getEnv().firebase + '/games/' + gameId;
-		environmentService.saveGameId(gameId);
-		this.updateUserGame(gameId);
-		var playerId = authService.getUserId();
-		var players = $firebase(new Firebase(this.getPlayersRef() + playerId));
-		players.$set({
-			id: playerId, status: 'player', host: false
-		});
-		$location.path('/preGame');
-		$rootScope.$broadcast('credsChanged');
-		return $firebase(new Firebase(ref));
-	}
-	this.leaveGame = function(gameId){
-		var playerId = authService.getUserId();
-		var players = $firebase(new Firebase(this.getPlayersRef()));
-		players.$remove(playerId)
-			.then(console.log('user removed from game'));
-		$location.path('/joinGame');
-		// ref = environmentService.getEnv().firebase + '/games/' + gameId;
-		environmentService.saveGameId(false);
-		this.updateUserGame(false);
-	}
-	this.updateUserGame = function(newGame) {
-			var userObj = this.getUserGame();
-			userObj.$set(newGame);
-			// userObj.$save();
-	}
-	this.addItems = function(array) {
-		var arr = this.getItems().$asArray();
-		for (var i = 0; i < array.length; i++) {
-			arr.$add(array[i]);
-		}
-	}
-
 
 })
 

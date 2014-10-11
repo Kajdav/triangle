@@ -1,23 +1,40 @@
 var app = angular.module('triangleApp');
 
-app.controller('mainControl', ['$timeout', '$scope', '$rootScope', '$firebase', 'dataService', 'authService', '$location',
-	function($timeout, $scope, $rootScope, $firebase, dataService, authService, $location){
+app.controller('mainControl', ['$timeout', '$scope', '$rootScope', '$firebase', 'dataService', 'authService', '$location', 'gameService',
+	function($timeout, $scope, $rootScope, $firebase, dataService, authService, $location, gameService){
 	var updateUser = function(){
-		var userObj = dataService.getUser();
-		userObj.$bindTo($scope, 'user');
+		if(authService.getAuthentication()){
+			var userObj = dataService.getUser();
+			userObj.$bindTo($scope, 'user').then(function(unbind){
+				$scope.unbindUser = unbind;
+				$scope.joinGameShow = joinGameShowTest();
+			});
+		} else {
+			$scope.user = false;
+		}
 	}
 	$scope.leaveGame = function(){
-		dataService.leaveGame($scope.user.inGame);
+		gameService.leaveGame($scope.user.inGame);
 	}
-
+	$scope.logout = function() {
+		dataService.getBasicRef().unauth();
+		$scope.unbindUser();
+		$scope.user = false;
+		$location.path('/login');
+		debugger;
+	}
 	$rootScope.$on('credsChanged', function(){
+		if ($scope.user){$scope.unbindUser();}
 		updateUser();
-		$scope.game = dataService.getGame().$asObject();
 		console.log('credsChanged');
-	})
-
+	});
 	updateUser();
-	$scope.game = dataService.getGame().$asObject();
-	console.log($scope.game);
-
+	var joinGameShowTest = function() {
+		if ($scope.user.inGame === false && $scope.user) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	$scope.joinGameShow = false;
 }])

@@ -15,4 +15,4 @@ app.controller('gameControl', function($scope, dataService){
 		    }
 		}, 1000);
 	}
-})
+});

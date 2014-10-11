@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('triangleApp');
-app.controller('preGameControl', function($rootScope, $scope, dataService, itemRef, $firebase, bucketService){
+app.controller('preGameControl', function($rootScope, $scope, dataService, itemRef, $firebase, bucketService, gameService){
 	$scope.addtoBucketShow = true;
 	$scope.addtoBucketInputShow = true;
 	$scope.addtoBucketConfirmShow = false;
@@ -19,7 +19,7 @@ app.controller('preGameControl', function($rootScope, $scope, dataService, itemR
 	$scope.dumpInBucket = function() {
 		// $scope.bucket.$add($scope.addtoBucket);
 		// console.log($scope.bucket);
-		dataService.addItems($scope.addtoBucket);
+		gameService.addItems($scope.addtoBucket);
 		$scope.addtoBucket = [];
 		$scope.addtoBucketConfirmShow = false;
 		$scope.gameplayShow = true;
@@ -31,5 +31,9 @@ app.controller('preGameControl', function($rootScope, $scope, dataService, itemR
 	$scope.repopulateBucket = function() {
 		bucketService.repopulateBucket();
 	}
+	// var ref = new Firebase(dataService.getPlayersRef());
+	// // console.log($firebase(ref.child('players').$asArray()));
+	// console.log(ref.$asObject())
+	// console.log(dataService.getUrl())
 })
 
