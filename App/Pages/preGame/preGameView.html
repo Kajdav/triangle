@@ -1,4 +1,8 @@
 <div class='container'>
+	<div class='chooseTeam' ng-show='chooseTeamShow'>
+		<button ng-click='chooseTeam(1)'>Team 1</button>
+		<button ng-click='chooseTeam(2)'>Team 2</button>
+	</div>
 	<div class='addtoBucket' ng-show='addtoBucketShow'>
 		<form name='addItemForm' ng-show='addtoBucketInputShow'>
 			<input type='text' ng-name='addItemInput' ng-model='addItemInput' placeholder='Item'></input>
@@ -12,7 +16,7 @@
 		</div>
 	</div>
 	<div class='gameplay' ng-show='gameplayShow'>
-		{{bucket.length - 1}} items left in the Bucket!
+		{{bucket.length}} items left in the Bucket!
 		<button ng-click='startGame()' ng-show='true'>Start Game!</button>
 	</div>
 </div>

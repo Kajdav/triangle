@@ -3,13 +3,19 @@
 var app = angular.module('triangleApp');
 app.controller('preGameControl', function($rootScope, $scope, $location, dataService, $firebase, bucketService, gameService){
 	$rootScope.$on('userLoaded', function(){
-		$scope.addtoBucketShow = true;
+		$scope.chooseTeamShow = true;
+		$scope.addtoBucketShow = false;
 		$scope.addtoBucketInputShow = true;
 		$scope.addtoBucketConfirmShow = false;
 		$scope.gameplayShow = false;
 		$scope.bucket = dataService.getMainItems().$asArray();
 		$scope.addtoBucket = [];
 	})
+	$scope.chooseTeam = function(team) {
+		$rootScope.user.team = 'team' + team;
+		$scope.chooseTeamShow = false;
+		$scope.addtoBucketShow = true;
+	}
 	$scope.addItem = function(item) {
 		$scope.addtoBucket.push({item: item});
 		$scope.addItemInput = '';

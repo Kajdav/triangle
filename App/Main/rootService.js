@@ -3,12 +3,14 @@ var app = angular.module('triangleApp');
 app.service('rootService', function($rootScope, dataService, authService){
 	this.bindUser = function(){
 		if(authService.getAuthentication()){
+			console.log(authService.getAuthentication());
 			var user = dataService.getUser();
 			user.$bindTo($rootScope, 'user').then(function(unbind){
 				$rootScope.unbindUser = unbind;
 				$rootScope.$broadcast('userLoaded');
 			})
 		} else if($rootScope.unbindUser) {
+			console.log('unbinding User');
 			$rootScope.unbindUser();
 			$rootScope.user = false;
 		} else {

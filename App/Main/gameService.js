@@ -5,12 +5,15 @@ app.service('gameService', function(dataService, $firebase, environmentService, 
 		$rootScope.gameId = gameId;
 		this.updateUserGame(gameId);
 		this.updateUserHost(true);
+		this.updatePlayerStatus('player');
 		// var playerId = authService.getUserId();
 		// var player = $firebase(new Firebase(dataService.getPlayersRef() + playerId));
 		// player.$set({
 		// 	id: playerId, status: 'player', host: true
 		// });
-		dataService.getGame().$set('status', false)
+		dataService.getGame().$set('status', false);
+		dataService.getGame().$set('team1', 0);
+		dataService.getGame().$set('team2', 0);
 		$location.path('/preGame');
 		$rootScope.$broadcast('credsChanged');
 		return $firebase(new Firebase(dataService.getUrl()));
@@ -47,5 +50,9 @@ app.service('gameService', function(dataService, $firebase, environmentService, 
 		var userRef = new Firebase(userUrl);
 		userRef.child('host').set(boolean);
 	}
-
+	this.updatePlayerStatus = function(status) {
+		var userUrl = dataService.getUserRef();
+		var userRef = new Firebase(userUrl);
+		userRef.child('playerStatus').set(status);
+	}
 })

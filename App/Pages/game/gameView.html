@@ -1,15 +1,21 @@
 <div class='container'>
 	<h1>{{game.$id}}:{{game.status}}</h1>
-	<h3>Round: </h3>
-	<span>Items left in bucket: {{bucket.length - 1}}</span>
+	<h2>Round: </h2>
+	<h5>Items left in bucket: {{bucket.length}}</h5>
 	<br>
-	<span>Team 1:</span>
+	<span>Team 1: {{game.score.team1}}</span>
 	<br>
-	<span>Team 2:</span>
-	<div class='meanTime' ng-show=''>Meantime</div>
-	<div class='itView'>
+	<span>Team 2: {{game.score.team2}}</span>
+	<div class='meanTime' ng-show='game.status === "waiting"'>
+		<span>Meantime View</span>
+		<br>
+		<button ng-click='claimIt()' ng-show='user.team === teamUp && notTaken'>Go for it!</button>
+	</div>
+	<div class='itView' ng-show='user.playerStatus === "it"'>
 		<span ng-show='!startShow'>Time left: {{counter}}</span>
 		<button ng-click='startTimer()' ng-show='startShow'>Start!</button>
+		<br>
+		<span ng-show='!startShow'>{{currentItem.item}}</span>
+		<button ng-click='claimItem()' ng-show='!startShow'>Claim item!</button>
 	</div>
-	<div class=''
 </div>

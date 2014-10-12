@@ -10,6 +10,9 @@ app.service('dataService', function($firebase, environmentService, $location, $r
 	this.getGame = function() {
 		return $firebase(new Firebase(this.getUrl()));
 	}
+	this.getGameRef = function(){
+		return new Firebase(this.getUrl());
+	}
 	this.getBasicRef = function(){
 		return new Firebase(environmentService.getEnv().firebase);
 	}
